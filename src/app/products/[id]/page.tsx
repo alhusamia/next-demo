@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { resolve } from "path";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: {
@@ -19,8 +19,21 @@ export const generateMetaData = async ({
   };
 };
 
+function getRandomInteger(count: number) {
+  return Math.floor(Math.random() * count);
+}
+
 export default async function Product({ params }: Props) {
   const { id } = await params;
+  const random = getRandomInteger(2);
+
+  if (random === 1) {
+    throw new Error("Something went wrong");
+  }
+  if (parseInt(id) > 10) {
+    notFound();
+  }
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
       <div className="flex flex-col items-center">
