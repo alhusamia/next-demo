@@ -6,32 +6,31 @@ import { usePathname } from "next/navigation";
 export const Navigation = () => {
   const pathname = usePathname();
 
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Product 1", href: "/products/1" },
+    { name: "Users", href: "/users-server" },
+  ];
+
   return (
     <nav className="flex items-center justify-center p-4">
-      <Link
-        href="/"
-        className={pathname === "/" ? "font-bold mr-4" : "mr-4 text-blue-500"}
-      >
-        Home
-      </Link>
-      <Link
-        href="/about"
-        className={
-          pathname === "/about" ? "font-bold mr-4" : "mr-4 text-blue-500"
-        }
-      >
-        About
-      </Link>
-      <Link
-        href="/products/1"
-        className={
-          pathname.startsWith("/products/1")
-            ? "font-bold mr-4"
-            : "mr-4 text-blue-500"
-        }
-      >
-        Product 1
-      </Link>
+      {navLinks.map((link) => {
+        const isActive =
+          pathname === link.href ||
+          (pathname.startsWith(link.href) && link.href !== "/");
+        return (
+          <div className="mr-4 pv-2 ph-2 bg-white flex rounded-lg align-center juctify-center">
+            <Link
+              key={link.name}
+              href={link.href}
+              className={isActive ? "font-bold mr-4" : "mr-4 text-blue-500"}
+            >
+              {link.name}
+            </Link>
+          </div>
+        );
+      })}
       <SignedOut>
         <SignInButton mode="modal" />
       </SignedOut>

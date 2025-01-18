@@ -1,5 +1,26 @@
-export default async function Product({params}:{params:{id:string}}) {
-    const {id} =  params;
+import { Metadata } from "next";
+import { resolve } from "path";
+
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
+export const generateMetaData = async ({
+  params,
+}: Props): Promise<Metadata> => {
+  const id = (await params).id;
+  const title = await new Promise((resolve) =>
+    setTimeout(() => resolve(`Product ${id}`), 1000)
+  );
+  return {
+    title: `Product ${title}`,
+  };
+};
+
+export default async function Product({ params }: Props) {
+  const { id } = params;
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
       <div className="flex flex-col items-center">
