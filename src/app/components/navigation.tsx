@@ -20,7 +20,10 @@ export const Navigation = () => {
           pathname === link.href ||
           (pathname.startsWith(link.href) && link.href !== "/");
         return (
-          <div className="mr-4 pv-2 ph-2 bg-white flex rounded-lg align-center juctify-center">
+          <div
+            key={link.name}
+            className="mr-4 pv-2 ph-2 bg-white flex rounded-lg align-center juctify-center"
+          >
             <Link
               key={link.name}
               href={link.href}
